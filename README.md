@@ -49,7 +49,7 @@ Por fim, alunos, professores e empresas parceiras precisam ter um login e uma se
 * Todos os campos são obrigatórios.
 * O aluno só pode se cadastrar em uma instituição que já esteja pré-cadastrada no sistema.
 * O aluno deve criar um login e senha para acessar o sistema.
-
+---
 ### 2. Cadastro de Professor
 
 **Como** um administrador do sistema, **eu quero** pré-cadastrar todos os professores no sistema **para** que eles possam distribuir as moedas para os alunos.
@@ -60,7 +60,7 @@ Por fim, alunos, professores e empresas parceiras precisam ter um login e uma se
 * Cada professor deve ter os campos: nome, CPF, departamento e instituição de ensino obrigatórios.
 * Cada professor deve estar necessariamente vinculado a uma instituição de ensino (já previamente cadastrada).
 * Após o cadastro, o professor deve receber um email com login e senha para acessar o sistema.
-
+---
 ### 3. Cadastro de Empresa Parceira
 **Como** uma empresa parceira, **eu quero** me cadastrar no sistema, **para** oferecer vantagens em troca de moedas virtuais.
 
@@ -69,7 +69,7 @@ Por fim, alunos, professores e empresas parceiras precisam ter um login e uma se
 * A empresa deve preencher os campos: nome da empresa, CNPJ, endereço e contato.
 * A empresa deve criar um login e senha para acessar o sistema.
 * Após o cadastro, a empresa deve poder adicionar vantagens, cada uma com nome, descrição, foto e custo em moedas.
-
+---
 ### 4. Distribuição de Moedas
 **Como** um professor, **eu quero** distribuir moedas aos meus alunos, **para** recompensá-los pelo desempenho positivo (bom comportamento, participação, etc) em sala de aula.
 
@@ -80,7 +80,7 @@ Por fim, alunos, professores e empresas parceiras precisam ter um login e uma se
 * O professor deve, obrigatoriamente, justificar o motivo daquele aluno estar sendo recompensado.
 * O aluno deve receber um email de notificação com o detalhe da transação.
 * O saldo do professor deve ser atualizado após a transação.
-
+---
 ### 5. Consulta de Extrato de Professor
 **Como** um professor, **eu quero** consultar o extrato da minha conta, **para** acompanhar o histórico de transações e meu saldo restante.
 
@@ -88,7 +88,7 @@ Por fim, alunos, professores e empresas parceiras precisam ter um login e uma se
 
 * O professor deve poder visualizar o saldo atual de moedas.
 * O professor deve poder visualizar um extrato que lista todas as transações realizadas, incluindo data, quantidade de moedas e o aluno que recebeu.
-
+---
 ### 6. Consulta de Extrato de Aluno
 **Como** um aluno, **eu quero** consultar o extrato da minha conta, **para** saber sobre as moedas que já recebi e as trocas realizadas.
 
@@ -97,7 +97,7 @@ Por fim, alunos, professores e empresas parceiras precisam ter um login e uma se
 * O aluno deve visualizar o saldo atual de moedas.
 * O extrato deve listar todas as transações de recebimento de moedas, incluindo a data, o professor que enviou e o motivo da transação.
 * O extrato deve listar também as trocas de moedas realizadas e o saldo após cada troca.
-
+---
 ### 7. Troca de Moedas por Vantagens
 **Como** um aluno, **eu quero** trocar minhas moedas por vantagens oferecidas pelas empresas parceiras, **para** poder usufruir dos benefícios do mérito estudantil.
 
@@ -108,7 +108,7 @@ Por fim, alunos, professores e empresas parceiras precisam ter um login e uma se
 * O saldo do aluno deve ser atualizado após a troca.
 * Um email contendo o cupom e o código de confirmação deve ser enviado ao aluno e à empresa parceira.
 * A vantagem deve ser removida do saldo de vantagens disponíveis para o aluno após a troca.
-
+---
 ### 8. Cadastrar Vantagem
 **Como** uma empresa parceira, **eu quero** cadastrar uma vantagem, **para** oferecer aos alunos um benefício pelo bom desempenho e promover meu negócio na plataforma.
 
@@ -117,7 +117,7 @@ Por fim, alunos, professores e empresas parceiras precisam ter um login e uma se
 * A vantagem deve possuir um custo (em moedas).
 * A empresa deve adicionar uma descrição e foto do produto.
 * Caso uma vantagem seja trocada por um aluno, a empresa deve receber um e-mail com os dados da troca.
-
+---
 ### 9. Autenticação de Usuários
 **Como** um usuário (aluno, professor ou empresa parceira), **eu quero** realizar login no sistema, **para** acessar as funcionalidades disponíveis conforme meu perfil.
 
