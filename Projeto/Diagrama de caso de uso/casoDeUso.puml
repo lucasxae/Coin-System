@@ -1,0 +1,58 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Administrador" as Administrador
+
+actor "Usuário" as Usuario
+
+actor "Aluno" as Aluno
+actor "Professor" as Professor
+actor "Empresa Parceira" as Empresa
+
+rectangle "Sistema de Mérito Estudantil" {
+
+    (Fazer Login) as UC_Login
+    (Consultar Extrato) as UC_ConsultarExtrato
+
+    (Cadastrar Professor) as UC_CadastrarProfessor
+    (Realizar Cadastro) as UC_RealizarCadastro
+    (Gerenciar Instituições) as UC_GerenciarInstituicoes
+
+    (Distribuir Moedas) as UC_DistribuirMoedas
+    (Receber Moedas) as UC_ReceberMoedas
+    (Trocar Moedas por Vantagens) as UC_TrocarMoedas
+
+    (Cadastrar Vantagens) as UC_AdicionarVantagens
+    (Receber Email) as UC_ReceberNotificacaoMoedas
+    (Receber Email de Troca) as UC_ReceberNotificacaoTroca
+
+}
+
+Usuario <|-- Aluno
+Usuario <|-- Professor
+Usuario <|-- Empresa
+
+Usuario --> UC_Login
+
+Aluno --> UC_ReceberMoedas
+Aluno --> UC_ConsultarExtrato
+Aluno --> UC_RealizarCadastro
+
+Professor --> UC_DistribuirMoedas
+Professor --> UC_ConsultarExtrato
+
+Empresa --> UC_RealizarCadastro
+Empresa --> UC_AdicionarVantagens
+Empresa --> UC_ReceberNotificacaoTroca
+
+Administrador --> UC_CadastrarProfessor
+Administrador --> UC_GerenciarInstituicoes
+
+UC_ReceberMoedas ..> UC_TrocarMoedas : <<extends>>
+UC_ReceberMoedas ..> UC_ReceberNotificacaoMoedas : <<includes>>
+UC_TrocarMoedas ..> UC_ReceberNotificacaoTroca : <<includes>>
+
+}
+
+@enduml
