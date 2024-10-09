@@ -1,4 +1,5 @@
 # Sistema de Mérito Estudantil
+![CoinStudy](https://github.com/user-attachments/assets/88074fdb-b578-4e87-9ae0-9fdaae43d632)
 
 Pretende-se desenvolver um sistema para estimular o reconhecimento do mérito estudantil através de uma moeda virtual. Essa moeda pode ser distribuída por professores aos seus alunos e trocada pelos alunos por produtos e descontos em empresas parceiras.
 
