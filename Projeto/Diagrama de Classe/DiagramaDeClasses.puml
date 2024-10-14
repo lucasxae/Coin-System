@@ -1,0 +1,79 @@
+@startuml
+skinparam linetype ortho
+
+class Pessoa {
+    +nome: String
+    +cpf: String
+    +créditos: Double
+    +senha: String
+    +login: String
+    +vizualizarExtrato(): void
+    +vizualizarTransações(): void
+}
+
+class Professor {
+    +departamento: Departamento
+    +enviarMoedas(aluno: Aluno, creditos: Double): void
+    +mensagem(): void
+}
+
+class Aluno {
+    +rg: String
+    +instituição: Instituição
+    +curso: Curso
+    
+}
+
+class Instituição {
+    +nome: String
+    +id: int
+}
+
+class Departamento {
+    +id: int
+    +nome: String
+    +instituição: Instituição
+    +atualizarCreditos(): void
+}
+
+class Vantagens {
+    +descrição: String
+    +foto: String
+    +id: int
+    +empresa: Empresa
+}
+
+class Empresa {
+    +id: int
+    +nome: String
+    +CNPJ: String
+    +instituição: Instituição
+    +registrarVantagem(): void
+}
+
+class Curso {
+    +id: int
+    +nome: String
+    +instituição: Instituição
+}
+
+class Cupom {
+    +id: int
+    +codigo: String
+    +aluno: Aluno
+    +empresa: Empresa
+    +resgatarVantagem(vantagen:Vantagens): void
+}
+
+Pessoa <|-- Professor
+Pessoa <|-- Aluno
+Instituição o-- Departamento
+Instituição o-- Curso
+Departamento o-- Professor
+Empresa o-- Vantagens
+Cupom o--Vantagens
+Aluno o--Curso
+Aluno o--Cupom
+
+
+@enduml
