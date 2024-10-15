@@ -32,6 +32,27 @@ entity Departamento {
   instituicao_id
 }
 
+entity Cupom {
+    id <<key>>
+    codigo
+    aluno_id 
+    empresa_id 
+  }
+  
+entity Empresa {
+    id <<key>>
+    nome
+    cnpj
+    instituicao_id 
+  }
+  
+entity Vantagens {
+    id <<key>>
+    descricao
+    foto
+    empresa_id 
+  }
+
 relationship ESTUDA_EM {
 }
 
@@ -47,11 +68,15 @@ ESTUDA_EM =1= Instituicao
 
 PERTENCE_A =1= Instituicao
 PERTENCE_A -N- Departamento
+PERTENCE_A -1- Empresa
 
 TRABALHA_EM -1- Departamento
 TRABALHA_EM -N- Professor
 TRABALHA_EM -1- Instituicao
 
+Vantagens -N- Empresa
+Cupom -N- Empresa
+Aluno -N- Cupom
 Pessoa ->- U { Aluno, Professor }
 
 @endchen
