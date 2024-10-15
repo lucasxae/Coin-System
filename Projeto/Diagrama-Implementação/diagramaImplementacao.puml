@@ -1,0 +1,42 @@
+@startuml
+!define RECTANGLE RECTANGLE
+
+node "Servidor do Cliente" {
+    [Aplicativo Web Cliente]
+}
+
+node "Servidor de Backend" {
+    package "Módulos Backend" {
+        [Gerenciamento de Alunos]
+        [Gerenciamento de Empresas]
+        [Gerenciamento de Vantagens]
+        [Distribuição de Moedas]
+        [Historico da Carteira e Extrato]
+    }
+    database "Banco de Dados Relacional" {
+        [Tabela Alunos]
+        [Tabela Professores]
+        [Tabela Instituições]
+        [Tabela Departamentos]
+        [Tabela Empresas]
+        [Tabela Vantagens]
+    }
+}
+
+node "API de Envio de Email" {
+    [Notificação de Recebimento de Moedas]
+}
+
+[Aplicativo Web Cliente] --> [Gerenciamento de Alunos] : Autenticação
+[Aplicativo Web Cliente] --> [Gerenciamento de Empresas] : Gerenciamento de Empresas
+[Aplicativo Web Cliente] --> [Gerenciamento de Vantagens] : Gerenciamento de Vantagens
+[Aplicativo Web Cliente] --> [Historico da Carteira e Extrato] : Visualização de Histórico e Extrato
+[Aplicativo Web Cliente] --> [Distribuição de Moedas] : Distribuir moedas
+
+[Distribuição de Moedas] --> [Notificação de Recebimento de Moedas] : Email com cupon
+[Gerenciamento de Alunos] --> [Tabela Alunos] : CRUD
+[Gerenciamento de Empresas] --> [Tabela Empresas] : CRUD
+[Gerenciamento de Vantagens] --> [Tabela Vantagens] : CRUD
+[Distribuição de Moedas] --> [Tabela Alunos]: CRUD
+
+@enduml
