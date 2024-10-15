@@ -1,0 +1,57 @@
+@startchen
+
+entity Pessoa {
+  cpf <<key>>
+  nome
+  creditos
+  senha
+  login
+}
+
+entity Aluno {
+  rg <<key>>
+  instituicao_id
+  curso_id
+}
+entity Professor {
+  departamento_id
+}
+
+entity Curso {
+  id <<key>>
+}
+
+entity Instituicao {
+  id <<key>>
+  nome
+}
+
+entity Departamento {
+  id <<key>>
+  nome
+  instituicao_id
+}
+
+relationship ESTUDA_EM {
+}
+
+relationship TRABALHA_EM {
+}
+
+relationship PERTENCE_A {
+}
+
+ESTUDA_EM -N- Aluno
+ESTUDA_EM -1- Curso
+ESTUDA_EM =1= Instituicao
+
+PERTENCE_A =1= Instituicao
+PERTENCE_A -N- Departamento
+
+TRABALHA_EM -1- Departamento
+TRABALHA_EM -N- Professor
+TRABALHA_EM -1- Instituicao
+
+Pessoa ->- U { Aluno, Professor }
+
+@endchen

@@ -10,6 +10,8 @@ actor "Aluno" as Aluno
 actor "Professor" as Professor
 actor "Empresa Parceira" as Empresa
 
+actor "Relógio" as Relogio
+
 rectangle "Sistema de Mérito Estudantil" {
 
     (Fazer Login) as UC_Login
@@ -20,6 +22,7 @@ rectangle "Sistema de Mérito Estudantil" {
     (Gerenciar Instituições) as UC_GerenciarInstituicoes
 
     (Distribuir Moedas) as UC_DistribuirMoedas
+    (Distribuir Moedas Semestrais) as UC_DistribuirMoedasProfessor
     (Receber Moedas) as UC_ReceberMoedas
     (Trocar Moedas por Vantagens) as UC_TrocarMoedas
 
@@ -35,8 +38,8 @@ Usuario <|-- Empresa
 
 Usuario --> UC_Login
 
-Aluno --> UC_ReceberMoedas
 Aluno --> UC_ConsultarExtrato
+Aluno --> UC_TrocarMoedas
 Aluno --> UC_RealizarCadastro
 
 Professor --> UC_DistribuirMoedas
@@ -49,7 +52,10 @@ Empresa --> UC_ReceberNotificacaoTroca
 Administrador --> UC_CadastrarProfessor
 Administrador --> UC_GerenciarInstituicoes
 
+UC_DistribuirMoedasProfessor <-right- Relogio
+
 UC_ReceberMoedas ..> UC_TrocarMoedas : <<extends>>
+UC_DistribuirMoedas ..> UC_ReceberMoedas
 UC_ReceberMoedas ..> UC_ReceberNotificacaoMoedas : <<includes>>
 UC_TrocarMoedas ..> UC_ReceberNotificacaoTroca : <<includes>>
 

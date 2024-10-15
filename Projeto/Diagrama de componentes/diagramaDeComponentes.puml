@@ -1,0 +1,15 @@
+@startuml
+
+component "Interface Coin Study" as interfaceLayer
+' Camada API
+component "API Coin Study " as apiLayer
+
+interfaceLayer --> apiLayer
+' SQL Servers
+database "SGBD" as sql
+
+' Organizando as conexões de interfaces
+apiLayer -down-( tcp
+tcp -down- sql
+
+@enduml
