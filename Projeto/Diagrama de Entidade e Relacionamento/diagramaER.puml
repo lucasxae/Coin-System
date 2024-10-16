@@ -1,82 +1,80 @@
-@startchen
+@startuml
+' hide the spot
+' hide circle
+' avoid problems with angled crows feet
 
-entity Pessoa {
-  cpf <<key>>
-  nome
-  creditos
-  senha
-  login
+skinparam linetype ortho
+
+entity "Aluno" as ALUNO {
+*cpf : text
+--
+nome : text
+creditos : number
+senha: text
+login: text
+rg: text
+instituicao_id: number <<FK>>
+curso_id: number <<FK>>
 }
 
-entity Aluno {
-  rg <<key>>
-  instituicao_id
-  curso_id
-}
-entity Professor {
-  departamento_id
+entity "Instituicao" as INSTITUICAO{
+*id : number <<generated>>
+--
+nome: text
 }
 
-entity Curso {
-  id <<key>>
+entity "Departamento" as DEPARTAMENTO{
+*id : number <<generated>>
+--
+nome: text
+instituicao_id: number <<FK>>
 }
 
-entity Instituicao {
-  id <<key>>
-  nome
+entity "Curso" as CURSO{
+*id : number <<generated>>
+
 }
 
-entity Departamento {
-  id <<key>>
-  nome
-  instituicao_id
+entity "Cupom" as CUPOM{
+*id : number <<generated>>
+--
+codigo: text
+aluno_id: number <<FK>>
+empresa_id: number <<FK>>
 }
 
-entity Cupom {
-    id <<key>>
-    codigo
-    aluno_id 
-    empresa_id 
-  }
-  
-entity Empresa {
-    id <<key>>
-    nome
-    cnpj
-    instituicao_id 
-  }
-  
-entity Vantagens {
-    id <<key>>
-    descricao
-    foto
-    empresa_id 
-  }
-
-relationship ESTUDA_EM {
+entity "Empresa" as EMPRESA{
+*id : number <<generated>>
+--
+nome: text
+cnpj: text
+instituicao_id: number <<FK>>
 }
 
-relationship TRABALHA_EM {
+entity "Professor" as PROFESSOR {
+*cpf : text
+--
+nome : text
+creditos : number
+senha: text
+login: text
+departamento_id: number <<FK>>
 }
 
-relationship PERTENCE_A {
+entity "Vantagens" as VANTAGENS {
+*id : text <<generated>>
+--
+descricao : text
+foto : number
+empresa_id: number <<FK>>
 }
 
-ESTUDA_EM -N- Aluno
-ESTUDA_EM -1- Curso
-ESTUDA_EM =1= Instituicao
 
-PERTENCE_A =1= Instituicao
-PERTENCE_A -N- Departamento
-PERTENCE_A -1- Empresa
-
-TRABALHA_EM -1- Departamento
-TRABALHA_EM -N- Professor
-TRABALHA_EM -1- Instituicao
-
-Vantagens -N- Empresa
-Cupom -N- Empresa
-Aluno -N- Cupom
-Pessoa ->- U { Aluno, Professor }
-
-@endchen
+ALUNO |o..|{ INSTITUICAO
+ALUNO |o..|{ CURSO
+ALUNO ||..o{ CUPOM
+EMPRESA ||..o{ CUPOM
+EMPRESA ||..o{ INSTITUICAO
+PROFESSOR |o..|{ DEPARTAMENTO
+EMPRESA ||..o{ VANTAGENS
+DEPARTAMENTO |o..|{ INSTITUICAO
