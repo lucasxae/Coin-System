@@ -1,5 +1,8 @@
 package org.example.model;
 
+import java.util.List;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
@@ -17,6 +20,8 @@ public abstract  class Pessoa {
      
     private String login;
 
+    @Column(name="roles")
+    private List<String> roles;
 
     public String getNome() {
         return this.nome;
@@ -58,5 +63,14 @@ public abstract  class Pessoa {
         this.login = login;
     }
 
+    public List<String> getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    
 
 }

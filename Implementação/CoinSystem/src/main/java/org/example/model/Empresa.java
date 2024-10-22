@@ -13,7 +13,7 @@ public class Empresa {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String nome;
     private String cnpj;
@@ -21,11 +21,11 @@ public class Empresa {
     @ManyToOne
     private Instituicao instituicao;
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
