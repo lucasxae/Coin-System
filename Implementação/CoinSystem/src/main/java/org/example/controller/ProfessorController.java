@@ -1,6 +1,5 @@
 package org.example.controller;
 
-
 import java.util.List;
 
 import org.example.model.Professor;
@@ -18,48 +17,49 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/Professor")
-public class ProfessorController{
+public class ProfessorController {
 
     @Autowired
     ProfessorService professorService;
 
     @GetMapping
-    public List<Professor> findAll(){
+    public List<Professor> findAll() {
         return this.professorService.findAll();
     }
 
     @GetMapping("/{login}")
-    public ResponseEntity<Professor> findByLogin(@PathVariable String login){
-        Professor Professor= this.professorService.findByLogin(login);
-        if(Professor!=null){
-            return ResponseEntity.ok().build();
-        }else{
+    public ResponseEntity<Professor> findByLogin(@PathVariable String login) {
+        Professor Professor = this.professorService.findByLogin(login);
+        if (Professor != null) {
+            return ResponseEntity.ok().body(Professor);
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
-    
+
     @PostMapping("/register")
-    public ResponseEntity<Professor> create(@RequestBody Professor newProfessor){
+    public ResponseEntity<Professor> create(@RequestBody Professor newProfessor) {
         try {
             this.professorService.createProfessor(newProfessor);
             return ResponseEntity.ok().body(newProfessor);
-           } catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
-           }
+        }
     }
-    @PutMapping("/{cpf}")
-    public ResponseEntity<Professor> update(@PathVariable String cpf, @RequestBody Professor newProfessor){
+
+    @PutMapping("/{login}")
+    public ResponseEntity<Professor> update(@PathVariable String login, @RequestBody Professor newProfessor) {
         try {
-            this.professorService.updateProfessor(cpf, newProfessor);
+            this.professorService.updateProfessor(login, newProfessor);
             return ResponseEntity.ok(newProfessor);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-    
     }
-    @DeleteMapping("/{cpf}")
-    public ResponseEntity<Void> removeProfessor(@PathVariable String cpf){
-        this.professorService.deleteByCpf(cpf);
+
+    @DeleteMapping("/{login}")
+    public ResponseEntity<Void> removeProfessor(@PathVariable String login) {
+        this.professorService.deleteByLogin(login);
         return ResponseEntity.noContent().build();
     }
-    }
+}
