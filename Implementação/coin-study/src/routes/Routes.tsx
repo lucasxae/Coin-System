@@ -4,7 +4,7 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import EditProfile from "../pages/EditProfile/EditProfile";
-import ProtectedRoute from "./ProtectedRoutes"; // Ajuste o caminho conforme necessário
+import { ProtectedRoute, UnauthenticatedRoute } from "./ProtectedRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -19,9 +19,30 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      { path: "login", element: <Login /> },
-      { path: "signup", element: <Signup /> },
-      { path: "edit-profile", element: <EditProfile /> },
+      {
+        path: "login",
+        element: (
+          <UnauthenticatedRoute>
+            <Login />
+          </UnauthenticatedRoute>
+        ),
+      },
+      {
+        path: "signup",
+        element: (
+          <UnauthenticatedRoute>
+            <Signup />
+          </UnauthenticatedRoute>
+        ),
+      },
+      {
+        path: "edit-profile",
+        element: (
+          <ProtectedRoute>
+            <EditProfile />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);

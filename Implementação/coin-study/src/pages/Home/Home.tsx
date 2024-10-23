@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 type Props = {};
 
 const Home = (props: Props) => {
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [userData, setUserData] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -47,7 +47,7 @@ const Home = (props: Props) => {
     );
   }
 
-  console.log(userData);
+  console.log(isAuthenticated());
 
   return (
     <div className="flex min-h-screen">

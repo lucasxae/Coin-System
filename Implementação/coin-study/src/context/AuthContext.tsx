@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginApi, registerApi } from "../services/AuthService";
+import { deleteUser } from "../context/UserContext";
 
 type UserContextType = {
   user: any | null;
@@ -13,6 +14,7 @@ type UserContextType = {
   ) => void;
   login: (email: string, password: string, role: string) => void;
   logout: () => void;
+  deleteAccount: (user: any) => void;
   isAuthenticated: () => boolean;
 };
 
@@ -72,6 +74,13 @@ export const UserProvider = ({ children }: Props) => {
       .catch(() => window.alert("ERRO LOGIN"));
   };
 
+  const deleteAccount = async (user: any) => {
+    await deleteUser(user);
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/");
+  };
+
   const isAuthenticated = () => {
     return !!user;
   };
@@ -84,7 +93,7 @@ export const UserProvider = ({ children }: Props) => {
 
   return (
     <UserContext.Provider
-      value={{ login, user, register, logout, isAuthenticated }}
+      value={{ login, user, register, logout, isAuthenticated, deleteAccount }}
     >
       {isLoggedIn ? children : null}
     </UserContext.Provider>

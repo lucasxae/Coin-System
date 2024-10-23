@@ -1,12 +1,14 @@
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { useAuth } from "@/context/AuthContext";
-import { getUserData, updateUserData } from "@/context/UserContext";
+import { getUserData, updateUserData, deleteUser } from "@/context/UserContext";
 import React, { useEffect, useState } from "react";
 
 const EditProfile = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, deleteAccount } = useAuth();
+  const [userId, setUserId] = useState<string | null>(null);
   const [userData, setUserData] = useState<any | null>(null);
   const [editableUser, setEditableUser] = useState<any | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   console.log("user", user.role);
   console.log(isAuthenticated());
@@ -40,7 +42,7 @@ const EditProfile = () => {
   };
 
   const handleSaveChanges = async (e: any) => {
-    e.preventDefault(); // Previna o comportamento padrão do formulário
+    e.preventDefault();
     if (
       user &&
       editableUser &&
@@ -66,13 +68,34 @@ const EditProfile = () => {
     }
   };
 
+  const openDeleteModal = (id: string) => {
+    setUserId(id);
+    setShowDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+    setUserId(null);
+  };
+
+  const handleDeleteAccount = async () => {
+    if (userId) {
+      try {
+        deleteAccount(user);
+      } catch (error) {
+        console.error("Erro ao deletar a conta:", error);
+        alert("Ocorreu um erro ao tentar deletar a conta.");
+      }
+    }
+  };
+
   return (
     <div className="flex min-h-screen">
       <Sidebar />
       <div className="flex-1 bg-gray-100">
-        <div className="flex-1 p-10 bg-gray-100 min-h-screen">
-          <div className="rounded-lg w-full max-w-md mx-auto">
-            <h2 className="text-2xl font-semibold text-center mb-6">
+        <div className="flex flex-col items-start p-10 bg-gray-100 min-h-screen">
+          <div className="w-full max-w-md">
+            <h2 className="text-2xl font-semibold text-left mb-6">
               Editar Perfil
             </h2>
 
@@ -135,9 +158,44 @@ const EditProfile = () => {
                 Cancelar
               </button>
             </form>
+            <button
+              type="button"
+              className="w-full mt-4 bg-red-500 text-white p-2 rounded hover:bg-red-600 transition duration-200"
+              onClick={() => openDeleteModal(user.email)}
+            >
+              Deletar Conta
+            </button>
           </div>
         </div>
       </div>
+
+      {showDeleteModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-6 rounded shadow-lg w-96">
+            <h3 className="text-xl font-bold mb-4">Confirmar Exclusão</h3>
+            <p className="mb-4">
+              Tem certeza de que deseja deletar sua conta? Esta ação não pode
+              ser desfeita.
+            </p>
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={handleDeleteAccount}
+                className="bg-red-600 text-white font-semibold rounded px-4 py-2 mr-2"
+              >
+                Confirmar
+              </button>
+              <button
+                type="button"
+                onClick={closeDeleteModal}
+                className="bg-gray-300 text-black font-semibold rounded px-4 py-2"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
