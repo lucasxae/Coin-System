@@ -37,7 +37,7 @@ const Home = (props: Props) => {
 
   useEffect(() => {
     getUserData(user.role);
-  }, []);
+  }, [user.role]);
 
   if (loading) {
     return (
@@ -53,10 +53,13 @@ const Home = (props: Props) => {
     <div className="flex min-h-screen">
       <Sidebar />
       <div className="flex-1 bg-gray-100">
-        <Header name={userData.nome} role={userData.roles} />
+        <Header
+          name={userData?.nome || "Nome não disponível"}
+          role={userData?.roles || ["Usuário"]}
+        />
         <div className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <BalanceCard balance={userData.creditos} />
+            <BalanceCard balance={userData?.creditos || 0} />
             <TransactionTable />
           </div>
           <div className="mt-8">

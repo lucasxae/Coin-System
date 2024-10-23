@@ -46,7 +46,7 @@ const Signup = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center mb-6">
-          Cadastro no Sistema de Mérito
+          Cadastro - CoinSystem
         </h2>
 
         <form onSubmit={handleSubmit(handleRegister)} className="space-y-6">
