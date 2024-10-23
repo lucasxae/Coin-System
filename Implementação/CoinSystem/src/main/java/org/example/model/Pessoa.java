@@ -11,13 +11,13 @@ public abstract  class Pessoa {
 
     private String nome;
  
-    @Id
+    
     private String cpf;
 
     private double creditos;
 
     private String senha;
-     
+    @Id
     private String login;
 
     @Column(name="roles")

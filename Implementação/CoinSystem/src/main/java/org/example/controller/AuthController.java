@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.AuthRequest;
 import org.example.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,13 @@ public class AuthController {
     public AuthService authService;
     
 @PostMapping("/login")
-        public String login(@RequestBody AuthRequest authRequest) {
-            return authService.login(authRequest.getLogin(), authRequest.getSenha());
+        public ResponseEntity login(@RequestBody AuthRequest authRequest) {
+            if(authService.login(authRequest.getLogin(), authRequest.getSenha()).equals("Login bem-sucedido como Aluno!")||
+            authService.login(authRequest.getLogin(), authRequest.getSenha()).equals("Login bem-sucedido como Professor!")){
+                return ResponseEntity.ok().build();
+
+            }return ResponseEntity.badRequest().build();
+            
         }
 
 }

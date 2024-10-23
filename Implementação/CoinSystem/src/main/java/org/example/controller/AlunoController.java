@@ -46,19 +46,19 @@ public class AlunoController{
             return ResponseEntity.badRequest().build();
            }
     }
-    @PutMapping("/{cpf}")
-    public ResponseEntity<Aluno> update(@PathVariable String cpf, @RequestBody Aluno newAluno){
+    @PutMapping("/{login}")
+    public ResponseEntity<Aluno> update(@PathVariable String login, @RequestBody Aluno newAluno){
         try {
-            this.alunoService.updateAluno(newAluno,cpf);
+            this.alunoService.updateAluno(newAluno,login);
             return ResponseEntity.ok(newAluno);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     
     }
-    @DeleteMapping("/{cpf}")
-    public ResponseEntity<Void> removeAluno(@PathVariable String cpf){
-        this.alunoService.deleteAluno(cpf);
+    @DeleteMapping("/{login}")
+    public ResponseEntity<Void> removeAluno(@PathVariable String login){
+        this.alunoService.deleteAluno(login);
         return ResponseEntity.noContent().build();
     }
     }

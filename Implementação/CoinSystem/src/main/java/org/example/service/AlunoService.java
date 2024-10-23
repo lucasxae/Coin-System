@@ -22,8 +22,8 @@ public class AlunoService {
     public Aluno createAluno(Aluno newAluno){
      return this.alunoRepository.save(newAluno);   
     }
-    public Aluno updateAluno(Aluno alunoObj, String cpf){
-        return alunoRepository.findByCpf(cpf)
+    public Aluno updateAluno(Aluno alunoObj, String login){
+        return alunoRepository.findByLogin(login)
         .map(aluno->{
             aluno.setCpf(alunoObj.getCpf());
             aluno.setCreditos(alunoObj.getCreditos());
@@ -36,9 +36,9 @@ public class AlunoService {
             return alunoRepository.save(aluno);
         }).orElseThrow(()->new RuntimeException("Não foi possivel Atualizar usuario"));
     }
-    public void deleteAluno(String cpf){
+    public void deleteAluno(String login){
         try {
-          alunoRepository.deleteById(cpf);
+          alunoRepository.deleteById(login);
         } catch (Exception e) {
             throw new RuntimeException("Não foi possivel adicionar Cliente");
         }

@@ -22,8 +22,8 @@ public class ProfessorService {
     public Professor createProfessor(Professor newProfessor){
      return this.professorRepository.save(newProfessor);   
     }
-    public Professor updateProfessor(String cpf, Professor professorUpdated){ 
-        return this.professorRepository.findByCpf(cpf)
+    public Professor updateProfessor(String login, Professor professorUpdated){ 
+        return this.professorRepository.findByLogin(login)
         .map(Professor->{
             Professor.setCreditos(professorUpdated.getCreditos());
             Professor.setLogin(professorUpdated.getLogin());
