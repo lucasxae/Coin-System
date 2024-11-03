@@ -3,6 +3,7 @@ package org.example.controller;
 import java.util.List;
 
 import org.example.model.Professor;
+import org.example.repository.ProfessorRepository;
 import org.example.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class ProfessorController {
 
     @Autowired
     ProfessorService professorService;
+
+    @Autowired
+    ProfessorRepository professorRepository;
 
     @GetMapping
     public List<Professor> findAll() {
@@ -61,5 +65,12 @@ public class ProfessorController {
     public ResponseEntity<Void> removeProfessor(@PathVariable String login) {
         this.professorService.deleteByLogin(login);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{login}/extrato")
+    public ResponseEntity<String> getExtrato(@PathVariable String login) {
+        return professorRepository.findById(login)
+                .map(professor -> ResponseEntity.ok("Quantidade de moedas (créditos): " + professor.getCreditos()))
+                .orElse(ResponseEntity.notFound().build());
     }
 }
