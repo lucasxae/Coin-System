@@ -48,10 +48,10 @@ export const UserProvider = ({ children }: Props) => {
             username: username,
             email: email,
           };
-          localStorage.setItem("user", JSON.stringify(userObj));
-          setUser(userObj!);
+          // localStorage.setItem("user", JSON.stringify(userObj));
+          // setUser(userObj!);
           window.alert("User registered successfully!");
-          navigate("/");
+          navigate("/login");
         }
       })
       .catch(() => window.alert("ERRO CADASTRO"));
