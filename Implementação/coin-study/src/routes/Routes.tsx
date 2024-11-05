@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import EditProfile from "../pages/EditProfile/EditProfile";
+import EnvioMoedas from "../pages/EnvioMoedas/EnvioMoedas";
 import { ProtectedRoute, UnauthenticatedRoute } from "./ProtectedRoutes";
 
 export const router = createBrowserRouter([
@@ -40,6 +41,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <EditProfile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "envio-moedas",
+        element: (
+          <ProtectedRoute>
+            <EnvioMoedas />
           </ProtectedRoute>
         ),
       },

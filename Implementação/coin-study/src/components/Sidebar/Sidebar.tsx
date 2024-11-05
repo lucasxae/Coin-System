@@ -29,6 +29,14 @@ const Sidebar = () => {
             Configurações
           </button>
         </li>
+        <li>
+          <button
+            onClick={() => navigate("/envio-moedas")}
+            className="w-full text-left p-2 hover:bg-gray-700 rounded"
+          >
+            Enviar Moedas
+          </button>
+        </li>
       </ul>
     </div>
   );
