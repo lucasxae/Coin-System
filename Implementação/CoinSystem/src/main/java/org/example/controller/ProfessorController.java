@@ -7,7 +7,6 @@ import org.example.model.Extrato;
 import org.example.model.Professor;
 import org.example.repository.ProfessorRepository;
 import org.example.service.EnvioMoedasService;
-import org.example.service.ExtratoService;
 import org.example.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -87,5 +85,5 @@ public class ProfessorController {
         return extratoService.enviaMoedas(enviarMoedas.getLoginAluno(), enviarMoedas.getLoginProfessor(),
                 enviarMoedas.getQuantidadeMoedas());
     }
-    
+
 }
