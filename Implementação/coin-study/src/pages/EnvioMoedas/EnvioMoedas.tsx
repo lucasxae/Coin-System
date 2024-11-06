@@ -1,7 +1,9 @@
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { useAuth } from "@/context/AuthContext";
-import { createEnvio } from "@/context/EnvioMoedas";
+import { createEnvio, getAlunos } from "@/context/EnvioMoedas";
 import React, { useState, useEffect } from "react";
+
+
 
 const EnvioMoedas = () => {
   const { user } = useAuth();
@@ -11,7 +13,18 @@ const EnvioMoedas = () => {
     quantidadeMoedas: ''
   });
 
+const [alunos, setAlunos] = useState([]);
+const fetchAlunos = async () => {
+    try {
+        const data = await getAlunos();
+        setAlunos(data);
+    } catch (error) {
+        console.error('Erro ao carregar itens:', error);
+    }
+};
+
   useEffect(() => {
+    fetchAlunos();
     if (user?.email) {
       setNewEnvio(prev => ({
         ...prev,
@@ -68,6 +81,19 @@ const EnvioMoedas = () => {
                   required
                 />
               </div>
+              <div className="space-y-2">
+                                    <h3 className="font-medium">Selecione o Aluno</h3>
+                                    <select
+                                        value={newEnvio.loginAluno}
+                                        onChange={(e) => setNewEnvio({ ...newEnvio, loginAluno })}
+                                        className="w-full p-2 border rounded"
+                                    >
+                                        <option value="">Selecione um aluno</option>
+                                        {alunos.map((aluno) => (
+                                            <option key={aluno.login} value={aluno.login}>{aluno.nome}</option>
+                                        ))}
+                                    </select>
+                                </div>
               <div>
                 <label htmlFor="loginProfessor" className="block text-gray-700">
                   Seu login

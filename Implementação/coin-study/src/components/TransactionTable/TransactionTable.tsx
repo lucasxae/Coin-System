@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
 const apiUrlProf = 'http://localhost:8080/Extrato/professor?professorId='; 
-const apiUrlAluno = 'localhost:8080/Extrato?alunoId=';
+const apiUrlAluno = 'http://localhost:8080/Extrato?alunoId=';
 
 const getExtratoProfessor = async (login) => {
   try {
@@ -31,37 +31,41 @@ const TransactionTable = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-      console.log("Entrei ...");
-
-       try {
-          let data;
-          if (user.role == "Professor") {
-             console.log("Carregando extrato do professor com login:", user.email);
-             data =  getExtratoProfessor(user.login);
-          } else {
-             console.log("Carregando extrato do aluno com login:", user.email);
-             data =  getExtratoAluno(user.login);
-          }
-          console.log("Extrato carregado:", data);
-          setTransactions(data);
-       } catch (error) {
-          console.error("Erro ao carregar o extrato:", error);
-       } finally {
-          setLoading(false);
-       }
- },[] );
+    const fetchData = async () => {
+      try {
+        let data;
+        if (user.role === "Professor") {
+          console.log("Carregando extrato do professor com login:", user.email);
+          data = await getExtratoProfessor(user.email);
+        } else {
+          console.log("Carregando extrato do aluno com login:", user.email);
+          data = await getExtratoAluno(user.email);
+        }
+        console.log("Extrato carregado:", data);
+        setTransactions(data); 
+      } catch (error) {
+        console.error("Erro ao carregar o extrato:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, [user]);
+  
+  
 
   if (loading) return <p>Carregando extrato...</p>;
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg col-span-2">
-      <h2 className="text-xl font-semibold mb-4">Histórico de Moedas</h2>
+      <h2 className="text-xl font-semibold mb-4">Extrato de Moedas</h2>
       <table className="w-full text-left">
         <thead>
           <tr className="border-b">
             <th className="py-2">Data</th>
             <th className="py-2">Mensagem</th>
-            <th className="py-2">Montante</th>
+            <th className="py-2">Valor</th>
           </tr>
         </thead>
         <tbody>
@@ -72,10 +76,10 @@ const TransactionTable = () => {
                 <td className="py-2">{transaction.mensagem}</td>
                 <td
                   className={`py-2 ${
-                    transaction.valorEnviado > 0 ? "text-green-500" : "text-red-500"
+                    transaction.valorEnviado > 0 ? "text-black-500" : "text-black-500"
                   }`}
                 >
-                  {transaction.valorEnviado > 0 ? `+${transaction.valorEnviado}` : transaction.valorEnviado} Moedas
+                  {transaction.valorEnviado + " Moedas"}
                 </td>
               </tr>
             ))
