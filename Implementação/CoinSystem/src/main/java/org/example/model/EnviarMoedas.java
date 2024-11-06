@@ -4,6 +4,7 @@ public class EnviarMoedas {
     String loginAluno;
     String loginProfessor;
     int quantidadeMoedas;
+    String mensagem;
 
     public String getLoginAluno() {
         return this.loginAluno;
@@ -27,5 +28,13 @@ public class EnviarMoedas {
 
     public void setQuantidadeMoedas(int quantidadeMoedas) {
         this.quantidadeMoedas = quantidadeMoedas;
+    }
+
+    public String getMensagem() {
+        return this.mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
     }
 }
