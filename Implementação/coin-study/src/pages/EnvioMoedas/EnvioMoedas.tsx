@@ -10,7 +10,8 @@ const EnvioMoedas = () => {
   const [newEnvio, setNewEnvio] = useState({
     loginAluno: '',
     loginProfessor: user?.email || '', 
-    quantidadeMoedas: ''
+    quantidadeMoedas: '',
+    mensagem:''
   });
 
 const [alunos, setAlunos] = useState([]);
@@ -48,7 +49,7 @@ const fetchAlunos = async () => {
     try {
       await createEnvio(newEnvio);
       alert("Moedas enviadas com sucesso!");
-      setNewEnvio({ loginAluno: '', loginProfessor: user.email || '', quantidadeMoedas: '' });
+      setNewEnvio({ loginAluno: '', loginProfessor: user.email || '', quantidadeMoedas: '', mensagem:'' });
     } catch (error) {
       console.error("Erro ao enviar moedas:", error);
       alert("Ocorreu um erro ao enviar as moedas.");
@@ -68,16 +69,16 @@ const fetchAlunos = async () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="loginAluno" className="block text-gray-700">
-                  Login do Aluno
+                  Mensagem
                 </label>
                 <input
                   type="text"
-                  id="loginAluno"
-                  name="loginAluno"
-                  value={newEnvio.loginAluno}
+                  id="mensagem"
+                  name="mensagem"
+                  value={newEnvio.mensagem}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded mt-1"
-                  placeholder="Insira o login do aluno"
+                  placeholder="Insira uma mensagem"
                   required
                 />
               </div>
@@ -85,7 +86,7 @@ const fetchAlunos = async () => {
                                     <h3 className="font-medium">Selecione o Aluno</h3>
                                     <select
                                         value={newEnvio.loginAluno}
-                                        onChange={(e) => setNewEnvio({ ...newEnvio, loginAluno })}
+                                        onChange={(e) => setNewEnvio({ ...newEnvio, loginAluno: e.target.value })}
                                         className="w-full p-2 border rounded"
                                     >
                                         <option value="">Selecione um aluno</option>

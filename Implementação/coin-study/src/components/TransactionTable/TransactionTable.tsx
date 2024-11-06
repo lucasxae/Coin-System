@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
+//import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 
 const apiUrlProf = 'http://localhost:8080/Extrato/professor?professorId='; 
@@ -29,7 +30,9 @@ const TransactionTable = () => {
   const { user } = useAuth();
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
+  //const router = useRouter();
 
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -40,6 +43,7 @@ const TransactionTable = () => {
         } else {
           console.log("Carregando extrato do aluno com login:", user.email);
           data = await getExtratoAluno(user.email);
+         //router.push("/home"); 
         }
         console.log("Extrato carregado:", data);
         setTransactions(data); 
