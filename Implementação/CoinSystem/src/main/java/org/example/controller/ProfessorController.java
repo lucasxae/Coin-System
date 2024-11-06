@@ -83,7 +83,7 @@ public class ProfessorController {
     @PostMapping("/enviarMoedas")
     public Extrato enviarMoedas(@RequestBody EnviarMoedas enviarMoedas) {
         return extratoService.enviaMoedas(enviarMoedas.getLoginAluno(), enviarMoedas.getLoginProfessor(),
-                enviarMoedas.getQuantidadeMoedas());
+                enviarMoedas.getQuantidadeMoedas(), enviarMoedas.getMensagem());
     }
 
 }

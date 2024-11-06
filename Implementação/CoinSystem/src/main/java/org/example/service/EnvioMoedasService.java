@@ -25,7 +25,7 @@ public class EnvioMoedasService {
     @Autowired
     ProfessorRepository professorRepository;
 
-    public Extrato enviaMoedas(String loginAluno, String loginProfessor, int quantidadeMoedas) {
+    public Extrato enviaMoedas(String loginAluno, String loginProfessor, int quantidadeMoedas, String mensagem) {
 
         if (alunoService.getAlunoByLogin(loginAluno) == null) {
             throw new RuntimeException("Aluno não encontrado");
@@ -54,6 +54,7 @@ public class EnvioMoedasService {
         extrato.setProfessorId(professor.getLogin());
         extrato.setValorEnviado(quantidadeMoedas);
         extrato.setDataEnvio(Date.from(new Date().toInstant()));
+        extrato.setMensagem(mensagem);
         extratoRepository.save(extrato);
 
         return extrato;
