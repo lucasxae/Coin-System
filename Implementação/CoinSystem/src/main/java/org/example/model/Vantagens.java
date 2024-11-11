@@ -17,10 +17,16 @@ public class Vantagens {
 
     private String descricao;
     private String foto;
+    private Double Valor;
 
     @ManyToOne
     private Empresa empresa;
 
+    public Vantagens(String descricao,String foto,double Valor){
+        this.descricao=descricao;
+        this.foto=foto;
+        this.Valor=Valor;
+    }
     public Long getId() {
         return this.id;
     }
