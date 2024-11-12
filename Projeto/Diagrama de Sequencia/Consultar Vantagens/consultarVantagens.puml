@@ -1,0 +1,21 @@
+@startuml
+
+participant Aluno
+
+Aluno -> Vantagens: consultarVantagens()
+activate Vantagens
+
+Vantagens ->  Banco: getAll()
+activate Banco
+
+Banco -> Vantagens: findAll()
+deactivate Banco
+
+Vantagens --> Aluno: getAllVantagens()
+
+
+
+deactivate Vantagens
+
+
+@enduml
