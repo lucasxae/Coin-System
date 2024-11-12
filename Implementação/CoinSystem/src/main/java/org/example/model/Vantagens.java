@@ -27,6 +27,10 @@ public class Vantagens {
         this.foto=foto;
         this.Valor=Valor;
     }
+    public Vantagens(){
+
+    }
+
     public Long getId() {
         return this.id;
     }

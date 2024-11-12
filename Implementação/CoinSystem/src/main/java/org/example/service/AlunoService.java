@@ -3,7 +3,9 @@ package org.example.service;
 import java.util.List;
 
 import org.example.model.Aluno;
+import org.example.model.Vantagens;
 import org.example.repository.AlunoRepository;
+import org.example.repository.VantagensRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,9 @@ public class AlunoService {
 
     @Autowired
     AlunoRepository alunoRepository;
+
+    @Autowired
+    VantagensRepository vantagensRepository;
 
     public List<Aluno> getAll() {
         return this.alunoRepository.findAll();
@@ -46,5 +51,9 @@ public class AlunoService {
         } catch (Exception e) {
             throw new RuntimeException("Não foi possivel adicionar Cliente");
         }
+    }
+
+    public List<Vantagens> getVantagens() {
+       return vantagensRepository.findAll();
     }
 }
