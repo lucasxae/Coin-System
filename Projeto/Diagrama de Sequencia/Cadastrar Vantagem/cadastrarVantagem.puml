@@ -1,0 +1,25 @@
+@startuml
+
+participant EmpresaParceira
+
+EmpresaParceira -> Vantagens: adicionarVantagem(VantagemDTO Vantagem)
+activate Vantagens
+
+Vantagens ->  Banco: cadastrarVantagem(String descricao, String foto, double valor)
+activate Banco
+
+alt cadastro == ok
+activate Banco
+
+Banco --> Vantagens   --   : log("Cadastrado com Sucesso")
+
+Vantagens --> EmpresaParceira: novaVantagem
+
+else cadastro == falha
+
+Banco --> Vantagens   --   : log("Falha ao Cadastrar")
+
+deactivate Vantagens
+end
+
+@enduml
