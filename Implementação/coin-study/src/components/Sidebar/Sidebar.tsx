@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 
-const Sidebar = () => {
+const Sidebar = ({ userType }) => {
   const navigate = useNavigate();
 
   return (
@@ -29,6 +29,7 @@ const Sidebar = () => {
             Configurações
           </button>
         </li>
+       {userType !== "ALUNO" && (
         <li>
           <button
             onClick={() => navigate("/envio-moedas")}
@@ -37,6 +38,8 @@ const Sidebar = () => {
             Enviar Moedas
           </button>
         </li>
+       )}
+        
       </ul>
     </div>
   );

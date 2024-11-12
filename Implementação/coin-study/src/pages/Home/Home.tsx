@@ -51,7 +51,9 @@ const Home = (props: Props) => {
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
+      <Sidebar userType={
+        user.role
+      } />
       <div className="flex-1 bg-gray-100">
         <Header
           name={userData?.nome || "Nome não disponível"}

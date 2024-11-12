@@ -91,7 +91,7 @@ const EditProfile = () => {
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
+      <Sidebar userType={user.role} />
       <div className="flex-1 bg-gray-100">
         <div className="flex flex-col items-start p-10 bg-gray-100 min-h-screen">
           <div className="w-full max-w-md">
