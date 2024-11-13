@@ -4,28 +4,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="empresa")
+@Table(name = "empresa")
 public class Empresa {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
     private String cnpj;
-    
-    @ManyToOne
-    private Instituicao instituicao;
+    private final String role = "EMPRESA";
+    private String email;
+    private String senha;
 
     public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -45,11 +44,23 @@ public class Empresa {
         this.cnpj = cnpj;
     }
 
-    public Instituicao getInstituicao() {
-        return this.instituicao;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setInstituicao(Instituicao instituicao) {
-        this.instituicao = instituicao;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return this.senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getRole() {
+        return this.role;
     }
 }

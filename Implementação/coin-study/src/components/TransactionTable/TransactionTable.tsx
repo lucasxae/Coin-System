@@ -1,28 +1,29 @@
-import axios from 'axios';
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 //import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
+import { roleChecker } from "@/utils/RoleChecker";
 
-const apiUrlProf = 'http://localhost:8080/Extrato/professor?professorId='; 
-const apiUrlAluno = 'http://localhost:8080/Extrato?alunoId=';
+const apiUrlProf = "http://localhost:8080/Extrato/professor?professorId=";
+const apiUrlAluno = "http://localhost:8080/Extrato?alunoId=";
 
 const getExtratoProfessor = async (login) => {
   try {
-      const response = await axios.get(`${apiUrlProf}${login}`);
-      return response.data;
+    const response = await axios.get(`${apiUrlProf}${login}`);
+    return response.data;
   } catch (error) {
-      console.error('Erro ao obter extrato do professor:', error);
-      throw error;
+    console.error("Erro ao obter extrato do professor:", error);
+    throw error;
   }
 };
 
 const getExtratoAluno = async (login) => {
   try {
-      const response = await axios.get(`${apiUrlAluno}${login}`);
-      return response.data;
+    const response = await axios.get(`${apiUrlAluno}${login}`);
+    return response.data;
   } catch (error) {
-      console.error('Erro ao obter extrato do aluno:', error);
-      throw error;
+    console.error("Erro ao obter extrato do aluno:", error);
+    throw error;
   }
 };
 
@@ -32,32 +33,29 @@ const TransactionTable = () => {
   const [loading, setLoading] = useState(true);
   //const router = useRouter();
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
         let data;
-        if (user.role === "Professor") {
+        if (roleChecker(user.role, "professor")) {
           console.log("Carregando extrato do professor com login:", user.email);
           data = await getExtratoProfessor(user.email);
         } else {
           console.log("Carregando extrato do aluno com login:", user.email);
           data = await getExtratoAluno(user.email);
-         //router.push("/home"); 
+          //router.push("/home");
         }
         console.log("Extrato carregado:", data);
-        setTransactions(data); 
+        setTransactions(data);
       } catch (error) {
         console.error("Erro ao carregar o extrato:", error);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, [user]);
-  
-  
 
   if (loading) return <p>Carregando extrato...</p>;
 
@@ -76,11 +74,15 @@ const TransactionTable = () => {
           {transactions.length > 0 ? (
             transactions.map((transaction) => (
               <tr key={transaction.id} className="border-b">
-                <td className="py-2">{new Date(transaction.dataEnvio).toLocaleDateString()}</td>
+                <td className="py-2">
+                  {new Date(transaction.dataEnvio).toLocaleDateString()}
+                </td>
                 <td className="py-2">{transaction.mensagem}</td>
                 <td
                   className={`py-2 ${
-                    transaction.valorEnviado > 0 ? "text-black-500" : "text-black-500"
+                    transaction.valorEnviado > 0
+                      ? "text-black-500"
+                      : "text-black-500"
                   }`}
                 >
                   {transaction.valorEnviado + " Moedas"}

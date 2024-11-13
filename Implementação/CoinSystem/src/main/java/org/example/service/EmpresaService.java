@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmpresaService {
+
     @Autowired
     EmpresaRepository empresaRepository;
 
@@ -27,11 +28,24 @@ public class EmpresaService {
         return this.empresaRepository.getByCnpj(cnpj);
     }
 
+    public Empresa getEmpresaByEmail(String email) {
+        return this.empresaRepository.findByEmail(email);
+    }
+
     public Empresa createEmpresa(Empresa newEmpresa) {
         if (empresaRepository.getByCnpj(newEmpresa.getCnpj()) == null) {
             return this.empresaRepository.save(newEmpresa);
         } else {
             throw new RuntimeException("Não foi possivel cadastrar empresa. CNPJ já cadastrado");
+        }
+    }
+
+    public Empresa login(String email, String senha) {
+        Empresa empresa = empresaRepository.findByEmail(email);
+        if (empresa != null && empresa.getSenha().equals(senha)) {
+            return empresa;
+        } else {
+            throw new RuntimeException("Credenciais inválidas");
         }
     }
 
@@ -53,12 +67,13 @@ public class EmpresaService {
             throw new RuntimeException("Não foi possivel deletar empresa.");
         }
     }
-    public Vantagens adicionarVantagem(VantagemDTO vantagem){
-       Vantagens novaVantagem= new Vantagens(vantagem.descricao(),vantagem.foto(),vantagem.valor());
-       Optional<Empresa> empresaCadastrada=this.empresaRepository.findById(vantagem.idEmpresa());
-       Empresa obj=empresaCadastrada.get();
-       novaVantagem.setEmpresa(obj);
-       return this.vantagensRepository.save(novaVantagem);
+
+    public Vantagens adicionarVantagem(VantagemDTO vantagem) {
+        Vantagens novaVantagem = new Vantagens(vantagem.titulo(), vantagem.descricao(), vantagem.foto(), vantagem.valor());
+        Optional<Empresa> empresaCadastrada = this.empresaRepository.findById(vantagem.idEmpresa());
+        Empresa obj = empresaCadastrada.get();
+        novaVantagem.setEmpresa(obj);
+        return this.vantagensRepository.save(novaVantagem);
     }
 
 }

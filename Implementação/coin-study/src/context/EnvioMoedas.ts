@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiUrlProf = 'http://localhost:8080/Professor'; 
 
-export const createEnvio = async (body) => {
+export const createEnvio = async (body: any) => {
     try {
         const response = await axios.post(`${apiUrlProf}/enviarMoedas`, body);
         return response.data;

@@ -5,6 +5,7 @@ import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import EnvioMoedas from "../pages/EnvioMoedas/EnvioMoedas";
+import CadastrarVantagens from "../pages/CadastrarVantagens/CadastrarVantagens";
 import { ProtectedRoute, UnauthenticatedRoute } from "./ProtectedRoutes";
 
 export const router = createBrowserRouter([
@@ -49,6 +50,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <EnvioMoedas />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "cadastrar-vantagens",
+        element: (
+          <ProtectedRoute>
+            <CadastrarVantagens />
           </ProtectedRoute>
         ),
       },

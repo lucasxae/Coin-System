@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
-     @Autowired
-     AlunoRepository alunoRepository;
 
-     @Autowired
-     ProfessorRepository professorRepository;
-     
-     public String login(String email, String password) {
+    @Autowired
+    AlunoRepository alunoRepository;
+
+    @Autowired
+    ProfessorRepository professorRepository;
+
+    public String login(String email, String password) {
         Pessoa pessoa = getPessoaByLogin(email);
         if (pessoa != null) {
             if (pessoa.getSenha().equals(password)) {
@@ -35,8 +36,7 @@ public class AuthService {
         }
         return "Email não encontrado!";
     }
-    
-    
+
     public Pessoa getPessoaByLogin(String login) {
         Pessoa pessoa = alunoRepository.getByLogin(login);
         if (pessoa == null) {
@@ -45,5 +45,3 @@ public class AuthService {
         return pessoa;
     }
 }
-
-

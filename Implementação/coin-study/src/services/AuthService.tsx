@@ -14,7 +14,7 @@ export const registerApi = async (
   name: string,
   cpf: string,
   email: string,
-  password: string,
+  password: string
 ) => {
   try {
     const data = await axiosInstance.post("Alunos/register", {
@@ -36,13 +36,16 @@ export const loginApi = async (
   role: string
 ) => {
   try {
-    const data = await axiosInstance.post("auth/login", {
-      login: email,
-      senha: password,
-      role: role,
-    });
-    return data;
+    const endpoint = role === "Empresa" ? "empresa/login" : "auth/login";
+    const body =
+      role === "Empresa"
+        ? { email, senha: password }
+        : { login: email, senha: password, role };
+
+    const response = await axiosInstance.post(endpoint, body);
+    return response.data;
   } catch (error) {
     handleError(error);
+    throw error;
   }
 };

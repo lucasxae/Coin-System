@@ -15,6 +15,7 @@ public class Vantagens {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String titulo;
     private String descricao;
     private String foto;
     private Double Valor;
@@ -22,12 +23,14 @@ public class Vantagens {
     @ManyToOne
     private Empresa empresa;
 
-    public Vantagens(String descricao,String foto,double Valor){
-        this.descricao=descricao;
-        this.foto=foto;
-        this.Valor=Valor;
+    public Vantagens(String titulo, String descricao, String foto, double Valor) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.foto = foto;
+        this.Valor = Valor;
     }
-    public Vantagens(){
+
+    public Vantagens() {
 
     }
 
@@ -37,6 +40,14 @@ public class Vantagens {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitulo() {
+        return this.titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getDescricao() {
@@ -61,5 +72,13 @@ public class Vantagens {
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
+    }
+
+    public Double getValor() {
+        return this.Valor;
+    }
+
+    public void setValor(Double Valor) {
+        this.Valor = Valor;
     }
 }

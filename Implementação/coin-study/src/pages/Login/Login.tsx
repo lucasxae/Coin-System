@@ -27,14 +27,15 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginForm>({ resolver: yupResolver(validation) });
 
-  const handleLogin = (form: LoginForm) => {
-    console.log("aaa");
-    localStorage.setItem("userEmail", form.email);
-
-    login(form.email, form.password, role);
+  const handleLogin = async (form: LoginForm) => {
+    try {
+      localStorage.setItem("userEmail", form.email);
+      login(form.email, form.password, role);
+    } catch (error) {
+      console.error("Login failed:", error);
+      window.alert("Erro no login. Verifique suas credenciais.");
+    }
   };
-
-  console.log(errors);
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -42,7 +43,6 @@ const Login = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
         <form onSubmit={handleSubmit(handleLogin)} className="space-y-6">
-          {/* Role */}
           <div>
             <label
               htmlFor="role"
@@ -58,6 +58,7 @@ const Login = () => {
             >
               <option value="Aluno">Aluno</option>
               <option value="Professor">Professor</option>
+              <option value="Empresa">Empresa</option>
             </select>
           </div>
 
@@ -76,12 +77,10 @@ const Login = () => {
               placeholder="seuemail@exemplo.com"
               {...register("email")}
             />
-            {errors.email ? (
+            {errors.email && (
               <p className="text-red-500 text-xs pt-1">
                 {errors.email.message}
               </p>
-            ) : (
-              ""
             )}
           </div>
 
@@ -100,12 +99,10 @@ const Login = () => {
               placeholder="********"
               {...register("password")}
             />
-            {errors.password ? (
+            {errors.password && (
               <p className="text-red-500 text-xs pt-1">
                 {errors.password.message}
               </p>
-            ) : (
-              ""
             )}
           </div>
 

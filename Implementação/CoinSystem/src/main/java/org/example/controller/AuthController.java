@@ -15,15 +15,13 @@ public class AuthController {
 
     @Autowired
     public AuthService authService;
-    
-@PostMapping("/login")
-        public ResponseEntity login(@RequestBody AuthRequest authRequest) {
-            if(authService.login(authRequest.getLogin(), authRequest.getSenha()).equals("Login bem-sucedido como Aluno!")||
-            authService.login(authRequest.getLogin(), authRequest.getSenha()).equals("Login bem-sucedido como Professor!")){
-                return ResponseEntity.ok().build();
 
-            }return ResponseEntity.badRequest().build();
-            
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
+        String loginResponse = authService.login(authRequest.getLogin(), authRequest.getSenha());
+        if (loginResponse.equals("Login bem-sucedido como Aluno!") || loginResponse.equals("Login bem-sucedido como Professor!")) {
+            return ResponseEntity.ok(loginResponse);
         }
-
+        return ResponseEntity.badRequest().body("Login falhou");
+    }
 }

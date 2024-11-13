@@ -1,40 +1,43 @@
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { useAuth } from "@/context/AuthContext";
 import { createEnvio, getAlunos } from "@/context/EnvioMoedas";
-import React, { useState, useEffect } from "react";
 
-
+interface Aluno {
+  login: string;
+  nome: string;
+}
 
 const EnvioMoedas = () => {
   const { user } = useAuth();
   const [newEnvio, setNewEnvio] = useState({
-    loginAluno: '',
-    loginProfessor: user?.email || '', 
-    quantidadeMoedas: '',
-    mensagem:''
+    loginAluno: "",
+    loginProfessor: user?.email || "",
+    quantidadeMoedas: "",
+    mensagem: "",
   });
 
-const [alunos, setAlunos] = useState([]);
-const fetchAlunos = async () => {
+  const [alunos, setAlunos] = useState<Aluno[]>([]);
+  const fetchAlunos = async () => {
     try {
-        const data = await getAlunos();
-        setAlunos(data);
+      const data = await getAlunos();
+      setAlunos(data);
     } catch (error) {
-        console.error('Erro ao carregar itens:', error);
+      console.error("Erro ao carregar itens:", error);
     }
-};
+  };
 
   useEffect(() => {
     fetchAlunos();
     if (user?.email) {
-      setNewEnvio(prev => ({
+      setNewEnvio((prev) => ({
         ...prev,
-        loginProfessor: user.email 
+        loginProfessor: user.email,
       }));
     }
   }, [user]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setNewEnvio((prev) => ({
       ...prev,
@@ -42,14 +45,19 @@ const fetchAlunos = async () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Antes de enviar: ", newEnvio);  
+    console.log("Antes de enviar: ", newEnvio);
 
     try {
       await createEnvio(newEnvio);
       alert("Moedas enviadas com sucesso!");
-      setNewEnvio({ loginAluno: '', loginProfessor: user.email || '', quantidadeMoedas: '', mensagem:'' });
+      setNewEnvio({
+        loginAluno: "",
+        loginProfessor: user.email || "",
+        quantidadeMoedas: "",
+        mensagem: "",
+      });
     } catch (error) {
       console.error("Erro ao enviar moedas:", error);
       alert("Ocorreu um erro ao enviar as moedas.");
@@ -58,7 +66,7 @@ const fetchAlunos = async () => {
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
+      <Sidebar userType={user.role} />
       <div className="flex-1 bg-gray-100">
         <div className="flex flex-col items-start p-10 bg-gray-100 min-h-screen">
           <div className="w-full max-w-md">
@@ -83,18 +91,22 @@ const fetchAlunos = async () => {
                 />
               </div>
               <div className="space-y-2">
-                                    <h3 className="font-medium">Selecione o Aluno</h3>
-                                    <select
-                                        value={newEnvio.loginAluno}
-                                        onChange={(e) => setNewEnvio({ ...newEnvio, loginAluno: e.target.value })}
-                                        className="w-full p-2 border rounded"
-                                    >
-                                        <option value="">Selecione um aluno</option>
-                                        {alunos.map((aluno) => (
-                                            <option key={aluno.login} value={aluno.login}>{aluno.nome}</option>
-                                        ))}
-                                    </select>
-                                </div>
+                <h3 className="font-medium">Selecione o Aluno</h3>
+                <select
+                  value={newEnvio.loginAluno}
+                  onChange={(e) =>
+                    setNewEnvio({ ...newEnvio, loginAluno: e.target.value })
+                  }
+                  className="w-full p-2 border rounded"
+                >
+                  <option value="">Selecione um aluno</option>
+                  {alunos.map((aluno) => (
+                    <option key={aluno.login} value={aluno.login}>
+                      {aluno.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div>
                 <label htmlFor="loginProfessor" className="block text-gray-700">
                   Seu login
@@ -103,16 +115,19 @@ const fetchAlunos = async () => {
                   type="text"
                   id="loginProfessor"
                   name="loginProfessor"
-                  value={newEnvio.loginProfessor} 
+                  value={newEnvio.loginProfessor}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded mt-1"
                   placeholder="Seu login"
                   required
-                  readOnly 
+                  readOnly
                 />
               </div>
               <div>
-                <label htmlFor="quantidadeMoedas" className="block text-gray-700">
+                <label
+                  htmlFor="quantidadeMoedas"
+                  className="block text-gray-700"
+                >
                   Quantidade de Moedas
                 </label>
                 <input

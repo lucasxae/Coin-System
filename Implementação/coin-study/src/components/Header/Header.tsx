@@ -3,14 +3,15 @@ import { useAuth } from "@/context/AuthContext";
 const Header = ({ name, role }: any) => {
   const { isAuthenticated, user, logout } = useAuth();
 
-  const getRoleName =
-    role[0].charAt(0).toUpperCase() + role[0].slice(1).toLowerCase();
+  // const getRoleName =
+  //   role !== null
+  //     ? role[0].charAt(0).toUpperCase() +
+  //       role.slice(1, role.length).toLowerCase()
+  //     : "Aluno";
 
   return (
     <header className="bg-white shadow p-4 flex justify-between items-center">
-      <h1 className="text-2xl font-bold text-gray-700">
-        Painel do {getRoleName}
-      </h1>
+      <h1 className="text-2xl font-bold text-gray-700">Painel</h1>
       <div className="flex items-center space-x-4">
         {isAuthenticated() && (
           <>

@@ -44,12 +44,6 @@ export const UserProvider = ({ children }: Props) => {
     await registerApi(email, cpf, password, username)
       .then((response) => {
         if (response) {
-          const userObj = {
-            username: username,
-            email: email,
-          };
-          // localStorage.setItem("user", JSON.stringify(userObj));
-          // setUser(userObj!);
           window.alert("User registered successfully!");
           navigate("/login");
         }
@@ -58,20 +52,18 @@ export const UserProvider = ({ children }: Props) => {
   };
 
   const login = async (email: string, password: string, role: string) => {
-    await loginApi(email, password, role)
-      .then((response) => {
-        if (response) {
-          const userObj = {
-            email: email,
-            role: role,
-          };
-          localStorage.setItem("user", JSON.stringify(userObj));
-          setUser(userObj!);
-          window.alert("User logged in successfully!");
-          navigate("/");
-        }
-      })
-      .catch(() => window.alert("ERRO LOGIN"));
+    try {
+      const response = await loginApi(email, password, role);
+      if (response) {
+        const userObj = { email, role };
+        localStorage.setItem("user", JSON.stringify(userObj));
+        setUser(userObj);
+        window.alert("User logged in successfully!");
+        navigate("/");
+      }
+    } catch {
+      window.alert("ERRO LOGIN");
+    }
   };
 
   const deleteAccount = async (user: any) => {
@@ -93,7 +85,14 @@ export const UserProvider = ({ children }: Props) => {
 
   return (
     <UserContext.Provider
-      value={{ login, user, register, logout, isAuthenticated, deleteAccount }}
+      value={{
+        login,
+        user,
+        register,
+        logout,
+        isAuthenticated,
+        deleteAccount,
+      }}
     >
       {isLoggedIn ? children : null}
     </UserContext.Provider>

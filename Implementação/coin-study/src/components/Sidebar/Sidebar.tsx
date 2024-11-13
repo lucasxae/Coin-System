@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
 
-const Sidebar = ({ userType }) => {
+const Sidebar = ({ userType }: any) => {
   const navigate = useNavigate();
 
   return (
@@ -29,17 +28,26 @@ const Sidebar = ({ userType }) => {
             Configurações
           </button>
         </li>
-       {userType !== "ALUNO" && (
-        <li>
-          <button
-            onClick={() => navigate("/envio-moedas")}
-            className="w-full text-left p-2 hover:bg-gray-700 rounded"
-          >
-            Enviar Moedas
-          </button>
-        </li>
-       )}
-        
+        {userType !== "ALUNO" && (
+          <li>
+            <button
+              onClick={() => navigate("/envio-moedas")}
+              className="w-full text-left p-2 hover:bg-gray-700 rounded"
+            >
+              Enviar Moedas
+            </button>
+          </li>
+        )}
+        {userType === "Empresa" && (
+          <li>
+            <button
+              onClick={() => navigate("/cadastrar-vantagens")}
+              className="w-full text-left p-2 hover:bg-gray-700 rounded"
+            >
+              Cadastrar Vantagens
+            </button>
+          </li>
+        )}
       </ul>
     </div>
   );
