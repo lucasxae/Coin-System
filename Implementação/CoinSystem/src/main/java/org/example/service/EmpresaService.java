@@ -62,7 +62,7 @@ public class EmpresaService {
 
     public void deleteEmpresa(String cnpj) {
         try {
-            empresaRepository.deleteByCnpj(cnpj);
+            empresaRepository.delete(this.empresaRepository.getByCnpj(cnpj));
         } catch (Exception e) {
             throw new RuntimeException("Não foi possivel deletar empresa.");
         }
