@@ -58,7 +58,7 @@ const Benefits = ({ userType, empresaId }: any) => {
                     <img
                       src={vantagem.foto}
                       alt={vantagem.titulo}
-                      className="h-24 w-24 mt-2 w-full h-auto rounded-md object-cover"
+                      className="h-24 w-24 mt-2 h-auto rounded-md object-cover"
                     />
                   )}
                 </div>
