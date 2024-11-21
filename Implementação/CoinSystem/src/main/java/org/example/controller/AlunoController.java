@@ -3,6 +3,7 @@ package org.example.controller;
 import java.util.List;
 
 import org.example.model.Aluno;
+import org.example.model.Vantagens;
 import org.example.repository.AlunoRepository;
 import org.example.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class AlunoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-     @PostMapping("/{login}/distribuir-moedas")
+    @PostMapping("/{login}/distribuir-moedas")
     public ResponseEntity<String> distribuirMoedas(
             @PathVariable String login,
             @RequestParam double quantidade) {
@@ -89,8 +90,14 @@ public class AlunoController {
                     aluno.setCreditos(novosCreditos);
                     alunoRepository.save(aluno);
 
-                    return ResponseEntity.ok("Distribuição realizada com sucesso! Novo saldo de créditos: " + aluno.getCreditos());
+                    return ResponseEntity
+                            .ok("Distribuição realizada com sucesso! Novo saldo de créditos: " + aluno.getCreditos());
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/{login}/trocar-moedas")
+    public Vantagens trocarMoedas(@PathVariable String login, @RequestParam Long idVantagem) {
+        return alunoService.trocarVantagem(idVantagem, login);
     }
 }
