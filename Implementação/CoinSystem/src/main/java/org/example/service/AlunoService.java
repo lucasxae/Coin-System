@@ -45,6 +45,14 @@ public class AlunoService {
                 }).orElseThrow(() -> new RuntimeException("Não foi possivel Atualizar usuario"));
     }
 
+    private Aluno updateVantageByAluno(Vantagens vantagens, String Login) {
+        return alunoRepository.findByLogin(Login)
+                .map(aluno -> {
+                    aluno.getIdVantagem().add(vantagens);
+                    return alunoRepository.save(aluno);
+                }).orElseThrow(() -> new RuntimeException("Não foi possivel Atualizar usuario"));
+    }
+
     public void deleteAluno(String login) {
         try {
             alunoRepository.deleteById(login);
@@ -54,6 +62,19 @@ public class AlunoService {
     }
 
     public List<Vantagens> getVantagens() {
-       return vantagensRepository.findAll();
+        return vantagensRepository.findAll();
+    }
+
+    public Vantagens trocarVantagem(Long idVantagem, String login) {
+        Vantagens vantagem = vantagensRepository.findById(idVantagem).get();
+        Aluno aluno = alunoRepository.getByLogin(login);
+        if (aluno.getCreditos() >= vantagem.getValor()) {
+            aluno.setCreditos(aluno.getCreditos() - vantagem.getValor());
+            this.updateVantageByAluno(vantagem, login);
+            return vantagem;
+        } else {
+            throw new RuntimeException("Saldo insuficiente");
+        }
+
     }
 }
