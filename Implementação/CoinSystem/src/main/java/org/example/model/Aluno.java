@@ -1,22 +1,35 @@
 package org.example.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="aluno")
-public class Aluno extends Pessoa{
+@Table(name = "aluno")
+public class Aluno extends Pessoa {
 
     private String rg;
+    @OneToMany
+    private List<Vantagens> vantagens;
+
+    public List<Vantagens> getIdVantagem() {
+        return this.vantagens;
+    }
+
+    public void setIdVantagem(List<Vantagens> vantagens) {
+        this.vantagens = vantagens;
+    }
 
     @ManyToOne
-    @JoinColumn(name="instituicao_id")
+    @JoinColumn(name = "instituicao_id")
     private Instituicao instituicao;
 
     @ManyToOne
-    @JoinColumn(name="curso_id")
+    @JoinColumn(name = "curso_id")
     private Curso curso;
 
     public String getRg() {
@@ -42,6 +55,5 @@ public class Aluno extends Pessoa{
     public void setCurso(Curso curso) {
         this.curso = curso;
     }
-
 
 }
