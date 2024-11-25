@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -20,7 +21,7 @@ public class Vantagens {
     private String foto;
     private Double Valor;
 
-    @ManyToOne
+    @ManyToMany
     private Empresa empresa;
 
     public Vantagens(String titulo, String descricao, String foto, double Valor) {
