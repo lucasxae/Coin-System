@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { roleChecker } from "@/utils/RoleChecker";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { useAuth } from "@/context/AuthContext";
 
