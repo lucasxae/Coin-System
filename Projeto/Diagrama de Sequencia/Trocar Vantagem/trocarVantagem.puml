@@ -1,0 +1,25 @@
+@startuml
+
+participant AlunoController
+
+AlunoController -> AlunoService: trocarVantagem(Long idVantagem, String login)
+activate AlunoService
+
+AlunoService ->  AlunoRepository: updateVantageByAluno(Vantagens vantagens, String Login)
+activate AlunoRepository
+
+alt troca == ok
+activate AlunoRepository
+
+AlunoRepository --> AlunoService   --   
+
+AlunoService --> AlunoController: Aluno
+
+else troca == falha
+
+AlunoRepository --> AlunoService   --   : new RuntimeException("Não foi possivel Atualizar usuario")
+
+deactivate AlunoService
+end
+
+@enduml
