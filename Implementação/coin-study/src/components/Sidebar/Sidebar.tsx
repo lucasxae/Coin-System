@@ -48,6 +48,16 @@ const Sidebar = ({ userType }: any) => {
             </button>
           </li>
         )}
+          {userType === "ALUNO" && (
+          <li>
+            <button
+              onClick={() => navigate("/minhas-vantagens")}
+              className="w-full text-left p-2 hover:bg-gray-700 rounded"
+            >
+              Minhas Vantagens
+            </button>
+          </li>
+        )}
       </ul>
     </div>
   );

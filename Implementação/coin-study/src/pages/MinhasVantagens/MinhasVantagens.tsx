@@ -1,59 +1,49 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { roleChecker } from "@/utils/RoleChecker";
-import { Button } from "@/components/ui/button";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import { useAuth } from "@/context/AuthContext";
 
 
-const Benefits = ({ userType, empresaId }: any) => {
-  console.log("id", empresaId);
+const Benefits = ({ userType, email }: any) => {
   const [benefits, setBenefits] = useState<any[]>([]);
   const [filteredBenefits, setFilteredBenefits] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { user } = useAuth();
+  console.log("id", user.email);
 
-  const ComprarBeneficio = async (alunoId, vantagemId) => {
-    try {
-        const response = await axios.delete(`http://localhost:8080/Alunos/${alunoId}/trocar-moedas?idVantagem=${vantagemId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao comprar vantagem:', error);
-        throw error;
-    }
-};
 
   useEffect(() => {
     const fetchBenefits = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("http://localhost:8080/Vantagens");
+        const response = await axios.get(`http://localhost:8080/Vantagens/${user.email}`);
         setBenefits(response.data);
-        if (roleChecker(userType, "Empresa") && empresaId) {
-          const empresaBenefits = response.data.filter(
-            (benefit: any) => benefit.empresa.id === empresaId
-          );
+        console.log("deu bom", user.email);
+        console.log(response.data);
+        setFilteredBenefits(response.data);
 
-          console.log("Empresa Benefits:", empresaBenefits);
-          setFilteredBenefits(empresaBenefits);
-        } else {
-          setFilteredBenefits(response.data);
-        }
+
       } catch (error) {
         console.error("Erro ao carregar as vantagens:", error);
+        console.log("deu ruim", user.email);
+
       } finally {
         setLoading(false);
       }
     };
 
     fetchBenefits();
-  }, [userType, empresaId]);
+  }, [userType, email]);
 
   if (loading) return <p>Carregando...</p>;
 
   return (
+    <div className="flex min-h-screen">
+      <Sidebar userType={userType} />
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <h2 className="text-xl font-semibold mb-4">
-        {userType === "Empresa"
-          ? "Vantagens cadastradas"
-          : "Vantagens Disponíveis"}
+        {"Minhas Vantagens"}
       </h2>
       <div className="space-y-4">
         {filteredBenefits.length > 0 ? (
@@ -80,9 +70,6 @@ const Benefits = ({ userType, empresaId }: any) => {
                   <p className="text-green-500 font-bold mt-2">
                     {vantagem.valor} Moedas
                   </p>
-                  <Button size="sm" variant="ghost" onClick={() => handleDelete(fornecedor.id)}>
-                  <Trash className="h-5 w-5" />
-                  </Button>
                 </div>
               </div>
             </div>
@@ -92,6 +79,8 @@ const Benefits = ({ userType, empresaId }: any) => {
         )}
       </div>
     </div>
+    </div>
+
   );
 };
 
